@@ -1,7 +1,7 @@
-var path,boy,cash,diamonds,jwellery,sword;
-var pathImg,boyImg,boy1Img,cashImg,diamondsImg,jwelleryImg,swordImg;
+var path,boy,cash,diamonds,jwellery,sword,nail;
+var pathImg,boyImg,boy1Img,cashImg,diamondsImg,jwelleryImg,swordImg,nailImg;
 var treasureCollection = 0;
-var cashG,diamondsG,jwelleryG,swordGroup;
+var cashG,diamondsG,jwelleryG,swordGroup,nailG;
 var gameover,gameoverImg
 
 var PLAY = 1;
@@ -17,6 +17,7 @@ function preload()
   diamondsImg = loadImage("diamonds.png");
   jwelleryImg = loadImage("jwell.png");
   swordImg = loadImage("sword.png");
+  nailImg = loadImage("nails.png")
   gameoverImg = loadImage("gameOver.png")
   boy1Img = loadAnimation("runner1.png")
 }
@@ -30,6 +31,10 @@ path=createSprite(200,200);
 path.addImage(pathImg);
 path.velocityY = 6;
 
+gameover = createSprite(200,250,10,10)
+gameover.addImage(gameoverImg)
+gameover.scale=0.8
+    
 
 //creating boy running
 boy = createSprite(60,370,20,20);
@@ -41,7 +46,7 @@ cashG=new Group();
 diamondsG=new Group();
 jwelleryG=new Group();
 swordGroup=new Group();
-
+nailG=new Group();
 }
 function draw() 
 {
@@ -52,6 +57,7 @@ function draw()
   
   if(gameState === PLAY)
   {
+    gameover.visible = false;
     boy.x = World.mouseX;
     
     //code to reset the background
@@ -62,6 +68,7 @@ function draw()
     createDiamonds();
     createJwellery();
     createSword();
+    createNail();
     
     if (cashG.isTouching(boy)) 
     {
@@ -79,7 +86,7 @@ function draw()
       jwelleryG.destroyEach();
       
     }else{
-      if(swordGroup.isTouching(boy)) 
+      if(swordGroup.isTouching(boy)||nailG.isTouching(boy)) 
       {      
         gameState = END
     }
@@ -87,9 +94,7 @@ function draw()
   }
   else if(gameState === END)
   {
-    gameover = createSprite(200,250,10,10)
-    gameover.addImage(gameoverImg)
-    gameover.scale=0.8
+    gameover.visible = true;
     path.velocityY=0
      
     boy.changeAnimation("SahilStop",boy1Img)
@@ -97,9 +102,15 @@ function draw()
     cashG.destroyEach();
     diamondsG.destroyEach();
     jwelleryG.destroyEach();
-    swordGroup.destroyEach();    
-} 
+    nailG.destroyEach();
+    swordGroup.destroyEach();  
     
+} 
+    if(keyDown("r")&& gameState===END){
+      reset()
+      
+    }
+  
   drawSprites();
   textSize(20);
   fill("black");
@@ -150,4 +161,22 @@ function createSword()
   sword.lifetime = 150;
   swordGroup.add(sword);
   }
+}
+function createNail()
+{
+  if (World.frameCount % 190 == 0) {
+  var nail = createSprite(Math.round(random(50, 350),40, 10, 10));
+  nail.addImage(nailImg);
+  nail.scale=0.1;
+  nail.velocityY = 4;
+  nail.lifetime = 150;
+  nailG.add(nail);
+  }
+}
+function reset(){
+  gameState = PLAY;
+  gameover.visible = false;
+  
+  treasureCollection= 0;
+  
 }
