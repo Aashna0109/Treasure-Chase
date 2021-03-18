@@ -3,7 +3,7 @@ var pathImg,boyImg,boy1Img,cashImg,diamondsImg,jwelleryImg,swordImg,nailImg;
 var treasureCollection = 0;
 var cashG,diamondsG,jwelleryG,swordGroup,nailG;
 var gameover,gameoverImg
-
+var restart,restartImg
 var PLAY = 1;
 var END = 0;
 var gameState = PLAY;
@@ -13,13 +13,15 @@ function preload()
 {
   pathImg = loadImage("Road.png");
   boyImg = loadAnimation("runner1.png","runner2.png");
+  boy1Img = loadAnimation("runner1.png")
   cashImg = loadImage("cash.png");
   diamondsImg = loadImage("diamonds.png");
   jwelleryImg = loadImage("jwell.png");
   swordImg = loadImage("sword.png");
   nailImg = loadImage("nails.png")
   gameoverImg = loadImage("gameOver.png")
-  boy1Img = loadAnimation("runner1.png")
+  restartImg = loadImage("restart.png")
+  
 }
 
 function setup()
@@ -35,7 +37,10 @@ gameover = createSprite(width/2,height/2,10,10)
 gameover.addImage(gameoverImg)
 gameover.scale=0.8
     
-
+restart = createSprite(width/2,height/1.7,10,10)
+restart.addImage(restartImg)  
+restart.scale=0.6
+  
 //creating boy running
 boy = createSprite(width/2,height-80,20,20);
 boy.addAnimation("SahilRunning",boyImg);
@@ -58,6 +63,7 @@ function draw()
   if(gameState === PLAY)
   {
     gameover.visible = false;
+    restart.visible = false;
     boy.x = World.mouseX;
     
     //code to reset the background
@@ -95,6 +101,7 @@ function draw()
   else if(gameState === END)
   {
     gameover.visible = true;
+    restart.visible = true;
     path.velocityY=0
      
     boy.changeAnimation("SahilStop",boy1Img)
@@ -106,7 +113,7 @@ function draw()
     swordGroup.destroyEach();  
     
 } 
-    if(keyDown("r")&& gameState===END){
+    if(mousePressedOver(restart)&& gameState===END){
       reset()
       
     }
@@ -115,7 +122,8 @@ function draw()
   textSize(20);
   fill("black");
   stroke("red")
-  text("Treasure: "+ treasureCollection,150,30);
+  text("Treasure: "+ treasureCollection,width/20,height/20);
+  
 }
 
 function createCash() 
@@ -176,7 +184,9 @@ function createNail()
 function reset(){
   gameState = PLAY;
   gameover.visible = false;
-  
+  restart.visible=false;
+  boy.changeAnimation("SahilRunning",boyImg);
+  path.velocityY=6
   treasureCollection= 0;
   
 }
