@@ -25,19 +25,19 @@ function preload()
 function setup()
 {
   
-  createCanvas(400,500);
+  createCanvas(windowWidth,windowHeight);
 // Moving background
-path=createSprite(200,200);
+path=createSprite(width/2,200);
 path.addImage(pathImg);
 path.velocityY = 6;
 
-gameover = createSprite(200,250,10,10)
+gameover = createSprite(width/2,height/2,10,10)
 gameover.addImage(gameoverImg)
 gameover.scale=0.8
     
 
 //creating boy running
-boy = createSprite(60,370,20,20);
+boy = createSprite(width/2,height-80,20,20);
 boy.addAnimation("SahilRunning",boyImg);
 boy.addAnimation("SahilStop",boy1Img);
 boy.scale=0.08; 
@@ -121,7 +121,7 @@ function draw()
 function createCash() 
 {
   if (World.frameCount % 50 == 0) {
-  var cash = createSprite(Math.round(random(50, 350),40, 10, 10));
+  var cash = createSprite(Math.round(random(50, width-50),40, 10, 10));
   cash.addImage(cashImg);
   cash.scale=0.12;
   cash.velocityY = 4;
@@ -132,7 +132,7 @@ function createCash()
 function createDiamonds() 
 {
   if (World.frameCount % 80 == 0) {
-  var diamonds = createSprite(Math.round(random(50, 350),40, 10, 10));
+  var diamonds = createSprite(Math.round(random(50, width-50),40, 10, 10));
   diamonds.addImage(diamondsImg);
   diamonds.scale=0.03;
   diamonds.velocityY = 4;
@@ -143,7 +143,7 @@ function createDiamonds()
 function createJwellery()
 {
   if (World.frameCount % 80 == 0) {
-  var jwellery = createSprite(Math.round(random(50, 350),40, 10, 10));
+  var jwellery = createSprite(Math.round(random(50, width-50),40, 10, 10));
   jwellery.addImage(jwelleryImg);
   jwellery.scale=0.13;
   jwellery.velocityY = 4;
@@ -154,7 +154,7 @@ function createJwellery()
 function createSword()
 {
   if (World.frameCount % 150 == 0) {
-  var sword = createSprite(Math.round(random(50, 350),40, 10, 10));
+  var sword = createSprite(Math.round(random(50, width-50),40, 10, 10));
   sword.addImage(swordImg);
   sword.scale=0.1;
   sword.velocityY = 4;
@@ -165,7 +165,7 @@ function createSword()
 function createNail()
 {
   if (World.frameCount % 190 == 0) {
-  var nail = createSprite(Math.round(random(50, 350),40, 10, 10));
+  var nail = createSprite(Math.round(random(50, width-50),40, 10, 10));
   nail.addImage(nailImg);
   nail.scale=0.1;
   nail.velocityY = 4;
